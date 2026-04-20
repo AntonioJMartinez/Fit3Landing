@@ -10,6 +10,8 @@ export default defineConfig({
         fr: path.resolve(__dirname, 'fr/index.html'),
         it: path.resolve(__dirname, 'it/index.html'),
         de: path.resolve(__dirname, 'de/index.html'),
+        pt: path.resolve(__dirname, 'pt/index.html'),
+        zh: path.resolve(__dirname, 'zh/index.html'),
       },
     },
   },

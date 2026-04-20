@@ -2,13 +2,15 @@
 import './style.css';
 
 const LOCALE_STORAGE_KEY = 'fit3-preferred-locale';
-const SUPPORTED_LOCALES = new Set(['en', 'es', 'fr', 'it', 'de']);
+const SUPPORTED_LOCALES = new Set(['en', 'es', 'fr', 'it', 'de', 'pt', 'zh']);
 const LOCALE_PATHS: Record<string, string> = {
   en: '/',
   es: '/es/',
   fr: '/fr/',
   it: '/it/',
   de: '/de/',
+  pt: '/pt/',
+  zh: '/zh/',
 };
 
 function normalizeLocale(locale: string | null | undefined): string | null {

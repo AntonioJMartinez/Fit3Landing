@@ -15,4 +15,10 @@
   <url>
     <loc>https://example.com/de/</loc>
   </url>
+  <url>
+    <loc>https://example.com/pt/</loc>
+  </url>
+  <url>
+    <loc>https://example.com/zh/</loc>
+  </url>
 </urlset>
