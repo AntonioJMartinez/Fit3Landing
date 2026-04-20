@@ -1,5 +1,77 @@
-// FitCoach Landing Page — Main JavaScript
+// Fit3 Landing Page — Main JavaScript
 import './style.css';
+
+const LOCALE_STORAGE_KEY = 'fit3-preferred-locale';
+const SUPPORTED_LOCALES = new Set(['en', 'es', 'fr', 'it', 'de']);
+const LOCALE_PATHS: Record<string, string> = {
+  en: '/',
+  es: '/es/',
+  fr: '/fr/',
+  it: '/it/',
+  de: '/de/',
+};
+
+function normalizeLocale(locale: string | null | undefined): string | null {
+  if (!locale) return null;
+
+  const [language] = locale.toLowerCase().split(/[-_]/);
+  return SUPPORTED_LOCALES.has(language) ? language : null;
+}
+
+function getPreferredDeviceLocale(): string | null {
+  const browserLocales = Array.isArray(navigator.languages) && navigator.languages.length > 0
+    ? navigator.languages
+    : [navigator.language];
+
+  for (const locale of browserLocales) {
+    const normalized = normalizeLocale(locale);
+    if (normalized) {
+      return normalized;
+    }
+  }
+
+  return null;
+}
+
+function initLocalePreference(): void {
+  const body = document.body;
+  const currentLocale = normalizeLocale(body.dataset.locale) ?? 'en';
+  const isAutoLocaleRoot = body.dataset.autoLocaleRoot === 'true';
+
+  document.querySelectorAll<HTMLSelectElement>('.language-select').forEach((select) => {
+    select.addEventListener('change', () => {
+      const targetPath = select.value;
+      const matchedLocale = Object.entries(LOCALE_PATHS).find(([, path]) => path === targetPath)?.[0];
+      const locale = normalizeLocale(matchedLocale);
+
+      if (locale) {
+        localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+      }
+
+      if (targetPath && window.location.pathname !== targetPath) {
+        window.location.assign(targetPath);
+      }
+    });
+  });
+
+  if (!isAutoLocaleRoot) {
+    return;
+  }
+
+  const storedLocale = normalizeLocale(localStorage.getItem(LOCALE_STORAGE_KEY));
+  const targetLocale = storedLocale ?? getPreferredDeviceLocale();
+
+  if (!targetLocale || targetLocale === currentLocale) {
+    return;
+  }
+
+  const targetPath = LOCALE_PATHS[targetLocale];
+  if (!targetPath || window.location.pathname === targetPath) {
+    return;
+  }
+
+  window.location.replace(targetPath);
+}
 
 // ============================================
 // Intersection Observer — Reveal on Scroll
@@ -168,6 +240,7 @@ function initHeroParallax(): void {
 // Init All
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
+  initLocalePreference();
   initRevealAnimations();
   initCounters();
   initNavbar();
