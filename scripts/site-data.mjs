@@ -29,6 +29,11 @@ export const siteConfig = {
       zh: '健身应用, 训练计划, 营养追踪, 私人教练应用, Apple Watch 健身, AI 健身教练',
     },
   },
+  assets: {
+    brandIconPath: '/images/app-icon.png',
+    faviconPath: '/favicon.png',
+    appleTouchIconPath: '/apple-touch-icon.png',
+  },
 };
 
 const sharedStats = [

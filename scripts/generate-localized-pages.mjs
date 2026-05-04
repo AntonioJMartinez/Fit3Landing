@@ -93,6 +93,10 @@ function renderLanguageSelect(currentCode, label) {
             </select>`;
 }
 
+function renderBrandMark() {
+  return `<img class="brand-icon" src="${siteConfig.assets.brandIconPath}" alt="" width="32" height="32" />`;
+}
+
 function renderFeatures(locale) {
   return locale.features
     .map(
@@ -199,6 +203,8 @@ function renderPage(code) {
   <meta name="twitter:image" content="${ogImage}" />
   ${getAlternateLinks(locale)}
   ${appBannerMeta}
+  <link rel="icon" type="image/png" href="${siteConfig.assets.faviconPath}" />
+  <link rel="apple-touch-icon" href="${siteConfig.assets.appleTouchIconPath}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -211,7 +217,7 @@ ${renderJsonLd(locale)}
   <nav id="navbar" class="navbar">
     <div class="nav-container">
       <a href="${locale.path}" class="nav-logo" aria-label="${escapeHtml(siteConfig.brandName)}">
-        <span class="logo-icon">💪</span>
+        ${renderBrandMark()}
         <span class="logo-text">${escapeHtml(siteConfig.brandName)}</span>
       </a>
       <div class="nav-links">
@@ -322,7 +328,7 @@ ${renderBenefits(locale)}
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <span class="logo-icon">💪</span>
+          ${renderBrandMark()}
           <span class="logo-text">${escapeHtml(siteConfig.brandName)}</span>
         </div>
         <div class="footer-meta">

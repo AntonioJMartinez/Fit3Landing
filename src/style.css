@@ -157,8 +157,12 @@ img {
   letter-spacing: -0.02em;
 }
 
-.logo-icon {
-  font-size: 1.5rem;
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  box-shadow: 0 0 18px rgba(var(--primary-rgb), 0.18);
+  flex: 0 0 auto;
 }
 
 .nav-links {
