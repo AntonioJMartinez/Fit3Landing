@@ -3,8 +3,6 @@ import path from 'node:path';
 
 export default defineConfig({
   build: {
-    outDir: 'dist/client',
-    emptyOutDir: true,
     rollupOptions: {
       input: {
         main: path.resolve(import.meta.dirname, 'index.html'),

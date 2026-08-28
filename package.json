@@ -12,7 +12,7 @@
     "verify:dist": "node --env-file-if-exists=.env.production.local scripts/verify-production-build.mjs",
     "predev": "npm run generate:pages",
     "dev": "vite",
-    "build": "npm run generate:pages && tsc && vite build && node scripts/prepare-sites-build.mjs",
+    "build": "npm run generate:pages && tsc && vite build",
     "preview": "vite preview",
     "verify": "npm run build && npm run verify:dist && npm audit --audit-level=high"
   },

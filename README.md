@@ -40,10 +40,9 @@ npm run verify
 `npm run verify` builds the site, checks every localized page and local
 reference, rejects placeholder/inert links in `dist/`, and runs `npm audit`.
 
-The static deployable artifact is `dist/client/`. The build also emits a
-Sites-compatible worker at `dist/server/index.js`; serve only the static
-artifact or use the included container. Do not expose the repository, Vite
-development server, or `vite preview` to the internet.
+The deployable static artifact is `dist/`. Serve only that directory or use
+the included container. Do not expose the repository, Vite development server,
+or `vite preview` to the internet.
 
 After deployment, smoke-test `/`, `/es/`, `/fr/`, `/it/`, `/de/`, `/pt/`,
 `/zh/`, `robots.txt`, `sitemap.xml`, App Store CTAs, and legal links.
@@ -69,3 +68,24 @@ docker build \
 Export those variables in the shell or have CI provide them. They are public
 website metadata, not secrets. Terminate TLS at the hosting platform or reverse
 proxy and forward traffic to port 8080.
+
+## GitHub Pages
+
+The repository includes a workflow at `.github/workflows/deploy-pages.yml`.
+Every push to `main` builds and verifies the site, then publishes `dist/` to
+GitHub Pages. The temporary launch configuration currently hides the support,
+privacy, and terms links until their real destinations are available.
+
+The custom-domain file is `public/CNAME`, so the Pages site is configured for
+`fitin3.com`. In Namecheap, remove the parking records and set:
+
+- `@` A `185.199.108.153`
+- `@` A `185.199.109.153`
+- `@` A `185.199.110.153`
+- `@` A `185.199.111.153`
+- `www` CNAME `AntonioJMartinez.github.io`
+
+After the first successful workflow run, enable HTTPS in the repository's
+Pages settings and wait for DNS/certificate propagation. The repository is
+currently private; GitHub Pages must be available for the account's plan for
+the public custom domain to serve it.

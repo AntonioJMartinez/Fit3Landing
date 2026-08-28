@@ -6,10 +6,7 @@ import { productionConfig } from './production-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
-const distDir = path.join(rootDir, 'dist', 'client');
-const sitesWorkerPath = path.join(rootDir, 'dist', 'server', 'index.js');
-const sourceHostingPath = path.join(rootDir, '.openai', 'hosting.json');
-const builtHostingPath = path.join(rootDir, 'dist', '.openai', 'hosting.json');
+const distDir = path.join(rootDir, 'dist');
 const pages = [
   'index.html',
   'es/index.html',
@@ -20,14 +17,6 @@ const pages = [
   'zh/index.html',
 ];
 const issues = [];
-
-if (!fs.existsSync(sitesWorkerPath)) {
-  issues.push('dist/server/index.js: missing Sites-compatible worker entrypoint');
-}
-
-if (fs.existsSync(sourceHostingPath) && !fs.existsSync(builtHostingPath)) {
-  issues.push('dist/.openai/hosting.json: missing Sites hosting metadata');
-}
 
 function resolveLocalReference(reference) {
   const pathname = reference.split(/[?#]/, 1)[0];
