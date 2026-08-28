@@ -41,16 +41,21 @@ function renderJsonLd(locale) {
   const downloadUrl =
     siteConfig.app.appStoreUrl !== '#' ? siteConfig.app.appStoreUrl : absoluteUrl(locale.path);
 
+  const organization = {
+    '@type': 'Organization',
+    '@id': `${absoluteUrl(locale.path)}#organization`,
+    name: siteConfig.brandName,
+    url: absoluteUrl(locale.path),
+  };
+
+  if (siteConfig.supportEmail) {
+    organization.email = siteConfig.supportEmail;
+  }
+
   const graph = {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'Organization',
-        '@id': `${absoluteUrl(locale.path)}#organization`,
-        name: siteConfig.brandName,
-        url: absoluteUrl(locale.path),
-        email: siteConfig.supportEmail,
-      },
+      organization,
       {
         '@type': 'WebSite',
         '@id': `${absoluteUrl(locale.path)}#website`,
@@ -179,6 +184,13 @@ function renderPage(code) {
     : '';
   const hasAppStoreUrl = siteConfig.app.appStoreUrl !== '#';
   const appStoreHref = hasAppStoreUrl ? siteConfig.app.appStoreUrl : '#download';
+  const footerLinks = siteConfig.legal.linksEnabled
+    ? `<div class="footer-links">
+            <a href="${siteConfig.legal.privacyUrl}" class="footer-link">${escapeHtml(locale.footer.privacy)}</a>
+            <a href="${siteConfig.legal.termsUrl}" class="footer-link">${escapeHtml(locale.footer.terms)}</a>
+            <a href="${siteConfig.legal.contactUrl}" class="footer-link">${escapeHtml(locale.footer.contact)}</a>
+          </div>`
+    : '';
 
   return `<!DOCTYPE html>
 <html lang="${locale.lang}" dir="${locale.dir}">
@@ -332,11 +344,7 @@ ${renderBenefits(locale)}
           <span class="logo-text">${escapeHtml(siteConfig.brandName)}</span>
         </div>
         <div class="footer-meta">
-          <div class="footer-links">
-            <a href="${siteConfig.legal.privacyUrl}" class="footer-link">${escapeHtml(locale.footer.privacy)}</a>
-            <a href="${siteConfig.legal.termsUrl}" class="footer-link">${escapeHtml(locale.footer.terms)}</a>
-            <a href="${siteConfig.legal.contactUrl}" class="footer-link">${escapeHtml(locale.footer.contact)}</a>
-          </div>
+${footerLinks}
           <div class="footer-locale" aria-label="${escapeHtml(locale.nav.languageLabel)}">
 ${renderLanguageSelect(code, locale.nav.languageLabel)}
           </div>

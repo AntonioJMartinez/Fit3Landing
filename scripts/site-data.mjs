@@ -1,20 +1,22 @@
-// Replace the placeholder domain, support email, legal URLs, and App Store values
-// before shipping so canonical tags, sitemap URLs, and the Apple smart banner
-// point at the production destination.
+import { productionConfig } from './production-config.mjs';
+
 export const siteConfig = {
   brandName: 'Fit3',
   defaultLocale: 'en',
-  siteUrl: 'https://example.com',
-  supportEmail: 'support@example.com',
+  siteUrl: productionConfig.siteUrl,
+  supportEmail: productionConfig.supportEmail,
   legal: {
-    privacyUrl: '#',
-    termsUrl: '#',
-    contactUrl: 'mailto:support@example.com',
+    linksEnabled: productionConfig.legal.linksEnabled,
+    privacyUrl: productionConfig.legal.privacyUrl,
+    termsUrl: productionConfig.legal.termsUrl,
+    contactUrl: productionConfig.supportEmail
+      ? `mailto:${productionConfig.supportEmail}`
+      : '',
   },
   app: {
-    appStoreId: '',
-    appStoreUrl: '#',
-    appArgument: '',
+    appStoreId: productionConfig.app.appStoreId,
+    appStoreUrl: productionConfig.app.appStoreUrl,
+    appArgument: productionConfig.app.appArgument,
     iosAppStoreBadgeLabel: 'Download on the App Store',
   },
   seo: {
@@ -30,7 +32,7 @@ export const siteConfig = {
     },
   },
   assets: {
-    brandIconPath: '/images/app-icon.png',
+    brandIconPath: '/favicon.png',
     faviconPath: '/favicon.png',
     appleTouchIconPath: '/apple-touch-icon.png',
   },
